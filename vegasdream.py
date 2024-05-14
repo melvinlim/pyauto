@@ -88,14 +88,14 @@ def checkMoney():
     match=re.search(r'[0-9]+',x[start:])
     if(match):
         sp=match.span()
-    result=x[start+sp[0]:start+sp[1]]
-    print(result)
-    try:
-        money=int(result)
-        return money
-    except e:
-        print(e)
-        return -1
+        result=x[start+sp[0]:start+sp[1]]
+        try:
+            money=int(result)
+            return money
+        except e:
+            print(e)
+    return -1
+    #print(result)
 
 def skipStory():
     activate('VirtuaNES')
