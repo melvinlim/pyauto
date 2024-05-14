@@ -6,9 +6,9 @@ ocr_reader = screen_ocr.Reader.create_quality_reader()
 #results = ocr_reader.read_screen()
 #print(results.as_string())
 
-windowTitle='Spotify Free'
+#windowTitle='Spotify Free'
 
-from win32gui import FindWindow, GetWindowRect
+from win32gui import FindWindow, GetWindowRect, GetClientRect, ClientToScreen
 
 def callback(hwnd, extra):
     windowTitle=win32gui.GetWindowText(hwnd)
@@ -27,13 +27,26 @@ win32gui.EnumWindows(callback, None)
 def getRect(windowTitle):
     window_handle = FindWindow(None, windowTitle)
     if(window_handle):
-        window_rect   = GetWindowRect(window_handle)
-        return window_rect
+        coords=(0,0)
+        coords=ClientToScreen(window_handle,coords)
+        print(coords)
+        #window_rect   = GetWindowRect(window_handle)   #includes title and menu
+        window_rect   = GetClientRect(window_handle)    #excludes title and menu
+        print(window_rect)
+        (x,y)=coords
+        result=()
+        result+=coords
+        result+=(window_rect[2]+x,window_rect[3]+y)
+        print(result)
+        return result
     return None
 
-#print(window_rect)
+def readWin(windowTitle):
+    rect=getRect(windowTitle)
+    #print(rect)
 
-rect=getRect(windowTitle)
+    results = ocr_reader.read_screen(rect)
+    return results.as_string()
 
-results = ocr_reader.read_screen(rect)
-print(results.as_string())
+x=readWin('VirtuaNES - Vegas Dream (USA)')
+print(x)
