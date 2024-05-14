@@ -1,7 +1,7 @@
 import screen_ocr
 import win32gui
 
-ocr_reader = screen_ocr.Reader.create_quality_reader()
+ocr_reader = screen_ocr.Reader.create_quality_reader(confidence_threshold=0.5)
 
 #results = ocr_reader.read_screen()
 #print(results.as_string())
@@ -31,6 +31,7 @@ def getRect(windowTitle):
         coords=ClientToScreen(window_handle,coords)
         print(coords)
         #window_rect   = GetWindowRect(window_handle)   #includes title and menu
+        #return window_rect
         window_rect   = GetClientRect(window_handle)    #excludes title and menu
         print(window_rect)
         (x,y)=coords
@@ -46,7 +47,8 @@ def readWin(windowTitle):
     #print(rect)
 
     results = ocr_reader.read_screen(rect)
+    #return results
     return results.as_string()
 
-x=readWin('VirtuaNES - Vegas Dream (USA)')
-print(x)
+#x=readWin('VirtuaNES - Vegas Dream (USA)')
+#print(x)

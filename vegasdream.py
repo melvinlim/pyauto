@@ -4,6 +4,7 @@ import pyautogui
 
 from pynput import keyboard
 from grabscreen import grabScreen
+from ocr import readWin
 
 import numpy as np
 
@@ -37,9 +38,10 @@ listener.start()
 
 def activate(window):
     print('activating: '+window)
-    x=shell.AppActivate('VirtuaNES')
+    x=shell.AppActivate(window)
     #x=shell.AppActivate('Notepad')
-    print(x)
+    if(not x):
+        print('failed to activate window: '+window)
     active_window = win32gui.GetWindowText(win32gui.GetForegroundWindow())
     print(active_window)
 
@@ -78,8 +80,38 @@ def waitForDiff():
         print(diff)
 
 import time
+import re
+money=0
+
+def checkMoney():
+    start=x.find('$')
+    match=re.search(r'[0-9]+',x[start:])
+    if(match):
+        sp=match.span()
+    result=x[start+sp[0]:start+sp[1]]
+    print(result)
+    try:
+        money=int(result)
+        return money
+    except e:
+        print(e)
+        return -1
+
+def skipStory():
+    activate('VirtuaNES')
+    time.sleep(1)
+    sendKeys('j')
+
 while running:
     waitForDiff()
+    x=readWin('VirtuaNES - Vegas Dream (USA)')
+    print(x)
+    tmp=checkMoney()
+    if(tmp>=0):
+        money=tmp
+    else:
+        skipStory()
+    print(money)
     make3Bet()
 
 #class scene(object):
