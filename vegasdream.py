@@ -102,15 +102,24 @@ def skipStory():
     time.sleep(1)
     sendKeys('j')
 
+def upArrow():
+    activate('VirtuaNES')
+    time.sleep(1)
+    sendKeys('up')
+
 while running:
     waitForDiff()
     x=readWin('VirtuaNES - Vegas Dream (USA)')
+    if(x.find('BET')):
+        upArrow()
     print(x)
     tmp=checkMoney()
     if(tmp>=0):
         money=tmp
     else:
         skipStory()
+        time.sleep(1)
+        upArrow()
     print(money)
     make3Bet()
 
