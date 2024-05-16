@@ -5,11 +5,13 @@ from pywinauto.win32_hooks import KeyboardEvent
 from pywinauto.win32_hooks import MouseEvent
 
 class hook(object):
-    def __init__(self):
+    def __init__(self,callback=None):
         self.main_thread_id = win32api.GetCurrentThreadId()
         def on_event(args):
             """Callback for keyboard and mouse events"""
             if isinstance(args, KeyboardEvent):
+                if(callback):
+                    callback(args.current_key)
                 if args.current_key == 'A' and args.event_type == 'key down' and 'Lcontrol' in args.pressed_key:
                     print("Ctrl + A was pressed");
                     
@@ -46,4 +48,7 @@ class hook(object):
         hk.handler = on_event
         hk.hook(keyboard=True, mouse=True)
 
-h = hook()
+def callback(key):
+    print('key '+key+' was pressed.')
+
+h = hook(callback)
