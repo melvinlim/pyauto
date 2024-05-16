@@ -22,17 +22,23 @@ class hook(object):
                 if args.current_key == 'K' and args.event_type == 'key down':
                     print("K was pressed");
 
-                if args.current_key == 'M' and args.event_type == 'key down' and 'U' in args.pressed_key:
+                if args.current_key == 'M' and args.event_type == 'key down' and 'Lcontrol' in args.pressed_key:
+                    print("Ctrl + M was pressed");
                     hk.unhook_mouse()
                     print("Unhook mouse")
 
-                if args.current_key == 'K' and args.event_type == 'key down' and 'U' in args.pressed_key:
+                if args.current_key == 'K' and args.event_type == 'key down' and 'Lcontrol' in args.pressed_key:
+                    print("Ctrl + K was pressed");
                     hk.unhook_keyboard()
                     print("Unhook keyboard")
 
             if isinstance(args, MouseEvent):
                 if args.current_key == 'RButton' and args.event_type == 'key down':
-                    print ("Right button pressed")
+                    #import pdb
+                    #pdb.set_trace()
+                    xcoord=args.mouse_x
+                    ycoord=args.mouse_y
+                    print ("Right button pressed @ "+str(xcoord)+" "+str(ycoord))
 
                 if args.current_key == 'WheelButton' and args.event_type == 'key down':
                     print("Wheel button pressed")
