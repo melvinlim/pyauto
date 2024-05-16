@@ -53,7 +53,7 @@ class ScreenWriter(object):
             root.update_idletasks()
             root.update()
 
-def callback(self):
-    self.text.set(getTime())
+#def callback(self):
+#    self.text.set(getTime())
 
-sw=ScreenWriter(callback)
+#sw=ScreenWriter(callback)

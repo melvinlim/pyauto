@@ -4,15 +4,21 @@ from pywinauto.win32_hooks import Hook
 from pywinauto.win32_hooks import KeyboardEvent
 from pywinauto.win32_hooks import MouseEvent
 
+import threading
+
 class hook(object):
-    def __init__(self,callback=None):
+    def startHook(self):
         self.main_thread_id = win32api.GetCurrentThreadId()
         def on_event(args):
-            if(callback):
-                callback(self,args)
+            if(self.callback):
+                self.callback(self,args)
         self.hk = Hook()
         self.hk.handler = on_event
         self.hk.hook(keyboard=True, mouse=True)
+    def __init__(self,callback=None):
+        self.callback=callback
+        tid=threading.Thread(target=self.startHook)
+        tid.start()
 
 def callback(self,args):
     key=args.current_key
@@ -51,4 +57,4 @@ def callback(self,args):
         if args.current_key == 'WheelButton' and args.event_type == 'key down':
             print("Wheel button pressed")
 
-h = hook(callback)
+#h = hook(callback)
