@@ -119,7 +119,7 @@ while running:
     else:
         skipStory()
         time.sleep(1)
-        upArrow()
+        upArrow()   
     print(money)
     make3Bet()
 

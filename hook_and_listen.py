@@ -5,11 +5,9 @@ from pywinauto.win32_hooks import Hook
 from pywinauto.win32_hooks import KeyboardEvent
 from pywinauto.win32_hooks import MouseEvent
 
-
 def on_timer():
     """Callback by timer out"""
     win32api.PostThreadMessage(main_thread_id, win32con.WM_QUIT, 0, 0);
-
 
 def on_event(args):
     """Callback for keyboard and mouse events"""

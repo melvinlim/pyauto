@@ -7,67 +7,40 @@ def getTime():
     current_time = now.strftime('%H:%M:%S')
     return current_time
 
-import pygame
+import tkinter as Tkinter
 import win32api
 import win32con
 import win32gui
-pg=pygame
-# Initialize Pygame
-pygame.init()
+import pywintypes
 
-# Set the size of the window
-window_size = (800, 600)
+root=Tkinter.Tk()
+text=Tkinter.StringVar()
+text.set('Text variable\nasdf')
 
-# Set the transparency color
-fuchsia = (255, 0, 128)  # This color will be transparent
+#modified from https://stackoverflow.com/questions/21840133/how-to-display-text-on-the-screen-without-a-window-using-python
+label = Tkinter.Label(root,
+    textvariable=text,
+    #text='Text on the screen',
+    font=('Times New Roman','80'),
+    fg='gray',
+    bg='white')
+label.master.overrideredirect(True)
+label.master.geometry("+250+250")
+label.master.lift()
+label.master.wm_attributes("-topmost", True)
+label.master.wm_attributes("-disabled", True)
+label.master.wm_attributes("-transparentcolor", "white")
 
-# Create a window without a frame
-screen = pygame.display.set_mode(window_size, pygame.NOFRAME)
+hWindow = pywintypes.HANDLE(int(label.master.frame(), 16))
+# http://msdn.microsoft.com/en-us/library/windows/desktop/ff700543(v=vs.85).aspx
+# The WS_EX_TRANSPARENT flag makes events (like mouse clicks) fall through the window.
+exStyle = win32con.WS_EX_COMPOSITED | win32con.WS_EX_LAYERED | win32con.WS_EX_NOACTIVATE | win32con.WS_EX_TOPMOST | win32con.WS_EX_TRANSPARENT
+win32api.SetWindowLong(hWindow, win32con.GWL_EXSTYLE, exStyle)
 
-# Get the window handle (HWND)
-hwnd = pygame.display.get_wm_info()["window"]
+label.pack()
+#label.mainloop()
 
-# Set window styles to include layered and transparent
-styles = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
-styles |= win32con.WS_EX_LAYERED | win32con.WS_EX_TRANSPARENT
-win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, styles)
-
-# Set the window's transparency color
-win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*fuchsia), 0, win32con.LWA_COLORKEY)
-
-font = pg.font.Font(None, 45)
-timer = 60
-screen_rect = screen.get_rect()
-color = (randrange(256), randrange(256), randrange(256))
-txt = font.render(getTime(), True, color)
-
-# Define constants for the SetWindowPos function
-HWND_TOPMOST = -1
-SWP_NOMOVE = 0x0002
-SWP_NOSIZE = 0x0001
-
-# Set the window to always be on top
-#windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
-windll.user32.SetWindowPos(pygame.display.get_wm_info()['window'], -1, 0, 0, 0, 0, 0x0001)
-# Main loop
-done = False
-while not done:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
-
-    # Fill the screen with the transparency color
-    screen.fill(fuchsia)
-
-    timer -= 1
-    # Update the text surface and color every 10 frames.
-    if timer <= 0:
-        timer = 120
-        color = (randrange(256), randrange(256), randrange(256))
-        txt = font.render(getTime(), True, color)
-
-    #screen.fill((30, 30, 30))
-    screen.blit(txt, txt.get_rect(center=screen_rect.center))
-
-    # Update the display
-    pygame.display.update()
+while True:
+    text.set(getTime())
+    root.update_idletasks()
+    root.update()
