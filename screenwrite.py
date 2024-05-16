@@ -49,7 +49,8 @@ class ScreenWriter(object):
             callback=nop
 
         while True:
-            callback(self)
+            if(callback(self)=='q'):
+                break
             root.update_idletasks()
             root.update()
 
