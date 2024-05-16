@@ -22,7 +22,7 @@ h=hook(hCallback)
 h.state=state
 
 def getState():
-    print(h.state)
+    #print(h.state)
     return h.state
 
 def getTime():
@@ -30,8 +30,11 @@ def getTime():
     current_time = now.strftime('%H:%M:%S')
     return current_time
 
+from activewindow import activeWin
+
 def swCallback(self):
-    self.text.set(getTime())
+    msg=str(getTime())+'\n'+str(activeWin())
+    self.text.set(msg)
     return getState()
 
 sw=ScreenWriter(swCallback)
