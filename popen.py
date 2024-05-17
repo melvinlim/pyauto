@@ -22,3 +22,13 @@ def startDolphin():
     startProc(serverArgs,serverPath)
 
 #startDolphin()
+
+def startEdge(page=None):
+    serverPath="C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    serverArgs=["C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"]
+    if(page!=None):
+        serverArgs+=[page]
+    startProc(serverArgs,serverPath)
+
+#startEdge('www.google.com')
+startEdge('http://localhost:8000')
