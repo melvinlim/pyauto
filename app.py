@@ -5,8 +5,6 @@ from datetime import datetime
 
 import win32api, win32con
 
-state='running'
-
 def hCallback(self,args):
     key=args.current_key
     print('key '+key+' was pressed.')
@@ -19,7 +17,7 @@ def hCallback(self,args):
 
 h=hook(hCallback)
 
-h.state=state
+h.state='running'
 
 def getState():
     #print(h.state)

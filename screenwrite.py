@@ -8,6 +8,7 @@ def getTime():
     return current_time
 
 import tkinter as Tkinter
+import tkinter.font as tkFont
 import win32api
 import win32con
 import win32gui
@@ -20,13 +21,15 @@ class ScreenWriter(object):
     def __init__(self,callback=None):
         root=Tkinter.Tk()
         self.text=Tkinter.StringVar()
+        self.font=tkFont.Font(family='Times New Roman',size=40)
         #text.set('Text variable\nasdf')
 
         #modified from https://stackoverflow.com/questions/21840133/how-to-display-text-on-the-screen-without-a-window-using-python
         label = Tkinter.Label(root,
             textvariable=self.text,
             #text='Text on the screen',
-            font=('Times New Roman','80'),
+            #font=('Times New Roman','80'),
+            font=self.font,
             fg='gray',
             bg='white')
         label.master.overrideredirect(True)
