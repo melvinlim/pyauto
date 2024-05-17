@@ -33,7 +33,8 @@ class ScreenWriter(object):
             fg='gray',
             bg='white')
         label.master.overrideredirect(True)
-        label.master.geometry("+250+250")
+        #label.master.geometry("+250+250")
+        label.master.geometry("+0+0")
         label.master.lift()
         label.master.wm_attributes("-topmost", True)
         label.master.wm_attributes("-disabled", True)
@@ -52,8 +53,11 @@ class ScreenWriter(object):
             callback=nop
 
         while True:
-            if(callback(self)=='q'):
+            cb=callback(self)
+            state=cb.state
+            if(state=='q'):
                 break
+            self.font['size']=cb.fontSize
             root.update_idletasks()
             root.update()
 
