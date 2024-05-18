@@ -30,11 +30,14 @@ class ScreenWriter(object):
             #text='Text on the screen',
             #font=('Times New Roman','80'),
             font=self.font,
+            anchor='e',             #align text to right boundary of window
+            justify='right',        #align text to right boundary of window
             fg='gray',
             bg='white')
         label.master.overrideredirect(True)
         #label.master.geometry("+250+250")
-        label.master.geometry("+0+0")
+        #label.master.geometry("+0+0")
+        label.master.geometry("+0+100")     #x and y locations
         label.master.lift()
         label.master.wm_attributes("-topmost", True)
         label.master.wm_attributes("-disabled", True)
