@@ -1,6 +1,8 @@
 from screenwrite import ScreenWriter
 from pyhook import hook
 
+from spotifyinfo import spotifySong
+
 from datetime import datetime
 
 import win32api, win32con
@@ -43,6 +45,8 @@ from activewindow import activeWin
 
 def swCallback(self):
     msg=str(getTime())+'\n'+str(activeWin())
+    msg+='\n'
+    msg+=spotifySong()
     self.text.set(msg)
     return getState()
 
