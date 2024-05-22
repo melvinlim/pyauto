@@ -14,9 +14,11 @@ class hook(object):
                 self.callback(self,args)
         self.hk = Hook()
         self.hk.handler = on_event
-        self.hk.hook(keyboard=True, mouse=True)
-    def __init__(self,callback=None):
+        self.hk.hook(keyboard=self.keyboard, mouse=self.mouse)
+    def __init__(self,callback=None,keyboard=True,mouse=True):
         self.callback=callback
+        self.keyboard=keyboard
+        self.mouse=mouse
         tid=threading.Thread(target=self.startHook)
         tid.start()
 

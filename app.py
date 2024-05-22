@@ -27,7 +27,7 @@ def hCallback(self,args):
         self.fontSize -= 2
         print('fontSize = '+str(self.fontSize))
 
-h=hook(hCallback)
+h=hook(hCallback,mouse=False)
 
 h.state='running'
 h.fontSize=20
