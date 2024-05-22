@@ -30,8 +30,8 @@ class ScreenWriter(object):
             #text='Text on the screen',
             #font=('Times New Roman','80'),
             font=self.font,
-            anchor='e',             #align text to right boundary of window
-            justify='right',        #align text to right boundary of window
+            anchor='w',         #align text to left boundary of window
+            justify='left',     #align text to left boundary of window
             fg='gray',
             bg='white')
         label.master.overrideredirect(True)
