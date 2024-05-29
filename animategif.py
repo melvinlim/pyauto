@@ -84,15 +84,16 @@ class MyLabel(Tkinter.Label):
 
 def callback(self):
     pass
+    #return 'q'
 
 def main():
         root=Tkinter.Tk()
         #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
         gif_path="R.gif"
 
-        label = MyLabel(root,
-                        gif_path
-            )
+        #callback=None
+
+        label = MyLabel(root,gif_path,callback)
 
         while False:
             #label.play()
