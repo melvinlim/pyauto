@@ -38,7 +38,6 @@ class MyLabel(Tkinter.Label):
             frame=image.convert('RGBA')
             self.frames.append(ImageTk.PhotoImage(frame))
         self.idx = 0
-        self.cancel = self.after(self.delay, self.play)
 
         #modified from https://stackoverflow.com/questions/21840133/how-to-display-text-on-the-screen-without-a-window-using-python
         self.anchor='w'
@@ -60,6 +59,8 @@ class MyLabel(Tkinter.Label):
 
         self.pack()
         #self.mainloop()
+        
+        self.cancel = self.after(self.delay, self.play)
         
     def play(self):
         self.config(image=self.frames[self.idx])
