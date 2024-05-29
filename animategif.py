@@ -16,7 +16,7 @@ def nop(self):
 
 #modified from https://www.blog.pythonlibrary.org/2023/12/05/viewing-an-animated-gif-with-python/
 class MyLabel(Tkinter.Label):
-    def __init__(self, master, filename):
+    def __init__(self, master, filename, callback=None):
         
         im = Image.open(filename)
         seq =  []
@@ -59,10 +59,21 @@ class MyLabel(Tkinter.Label):
 
         self.pack()
         #self.mainloop()
+
+        if(not callback):
+            self.callback=nop
+        else:
+            self.callback=callback
         
         self.cancel = self.after(self.delay, self.play)
         
     def play(self):
+
+        tmp=self.callback(self)
+        if(tmp=='q'):
+            print('quitting')
+            return
+        
         self.config(image=self.frames[self.idx])
         self.idx += 1
         if self.idx == len(self.frames):
@@ -71,8 +82,10 @@ class MyLabel(Tkinter.Label):
         print(self.idx)
         self.cancel = self.after(self.delay, self.play)
 
-class ScreenWriter(object):
-    def __init__(self,callback=None):
+def callback(self):
+    pass
+
+def main():
         root=Tkinter.Tk()
         #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
         gif_path="R.gif"
@@ -80,9 +93,6 @@ class ScreenWriter(object):
         label = MyLabel(root,
                         gif_path
             )
-
-        if(not callback):
-            callback=nop
 
         while False:
             #label.play()
@@ -95,7 +105,4 @@ class ScreenWriter(object):
             root.update_idletasks()
             root.update()
 
-def callback(self):
-    pass
-
-sw=ScreenWriter(callback)
+main()
