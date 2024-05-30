@@ -51,16 +51,17 @@ class ScreenWriter(object):
 
         label.pack()
         #label.mainloop()
-
+        
         if(not callback):
             callback=nop
 
         while True:
             cb=callback(self)
-            state=cb.state
-            if(state=='q'):
-                break
-            self.font['size']=cb.fontSize
+            if(cb):
+                state=cb.state
+                if(state=='q'):
+                    break
+                self.font['size']=cb.fontSize
             root.update_idletasks()
             root.update()
 
@@ -68,3 +69,4 @@ class ScreenWriter(object):
 #    self.text.set(getTime())
 
 #sw=ScreenWriter(callback)
+#sw=ScreenWriter()
