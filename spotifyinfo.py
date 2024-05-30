@@ -24,7 +24,9 @@ def spotifySong():
     param=[0]
     win32gui.EnumWindows(enum_windows_proc, param)
     result=param[0]
-    return result
+    if(result==0):
+        return 'Spotify not found'
+    return str(result)
 
 #r=spotifySong()
 #print(r)
