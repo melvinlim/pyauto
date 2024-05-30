@@ -17,7 +17,7 @@ import pywintypes
 def nop(self):
     pass
 
-class ScreenWriter(object):
+class ScreenWriter(Tkinter.Label):
     def __init__(self,callback=None):
         root=Tkinter.Tk()
         self.text=Tkinter.StringVar()
@@ -25,7 +25,8 @@ class ScreenWriter(object):
         #text.set('Text variable\nasdf')
 
         #modified from https://stackoverflow.com/questions/21840133/how-to-display-text-on-the-screen-without-a-window-using-python
-        label = Tkinter.Label(root,
+        Tkinter.Label.__init__(self,
+            root,
             textvariable=self.text,
             #text='Text on the screen',
             #font=('Times New Roman','80'),
@@ -34,28 +35,33 @@ class ScreenWriter(object):
             justify='left',     #align text to left boundary of window
             fg='gray',
             bg='white')
-        label.master.overrideredirect(True)
-        #label.master.geometry("+250+250")
-        #label.master.geometry("+0+0")
-        label.master.geometry("+0+100")     #x and y locations
-        label.master.lift()
-        label.master.wm_attributes("-topmost", True)
-        label.master.wm_attributes("-disabled", True)
-        label.master.wm_attributes("-transparentcolor", "white")
+        self.master.overrideredirect(True)
+        #self.master.geometry("+250+250")
+        #self.master.geometry("+0+0")
+        self.master.geometry("+0+100")     #x and y locations
+        self.master.lift()
+        self.master.wm_attributes("-topmost", True)
+        self.master.wm_attributes("-disabled", True)
+        self.master.wm_attributes("-transparentcolor", "white")
 
-        hWindow = pywintypes.HANDLE(int(label.master.frame(), 16))
+        hWindow = pywintypes.HANDLE(int(self.master.frame(), 16))
         # http://msdn.microsoft.com/en-us/library/windows/desktop/ff700543(v=vs.85).aspx
         # The WS_EX_TRANSPARENT flag makes events (like mouse clicks) fall through the window.
         exStyle = win32con.WS_EX_COMPOSITED | win32con.WS_EX_LAYERED | win32con.WS_EX_NOACTIVATE | win32con.WS_EX_TOPMOST | win32con.WS_EX_TRANSPARENT
         win32api.SetWindowLong(hWindow, win32con.GWL_EXSTYLE, exStyle)
 
-        label.pack()
-        #label.mainloop()
+        self.pack()
+        #self.mainloop()
         
         if(not callback):
-            callback=nop
+            self.callback=nop
+        else:
+            self.callback=callback
 
-        while True:
+        self.delay = 100
+        self.after(self.delay, self.play)
+
+        while False:
             cb=callback(self)
             if(cb):
                 state=cb.state
@@ -65,6 +71,15 @@ class ScreenWriter(object):
             root.update_idletasks()
             root.update()
 
+    def play(self):
+        cb=self.callback(self)
+        if(cb):
+            state=cb.state
+            if(state=='q'):
+                return
+            self.font['size']=cb.fontSize
+        self.after(self.delay, self.play)
+            
 #def callback(self):
 #    self.text.set(getTime())
 
