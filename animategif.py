@@ -111,4 +111,4 @@ def main():
             root.update_idletasks()
             root.update()
 
-main()
+#main()

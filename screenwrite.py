@@ -18,8 +18,8 @@ def nop(self):
     pass
 
 class ScreenWriter(Tkinter.Label):
-    def __init__(self,callback=None):
-        root=Tkinter.Tk()
+    def __init__(self,root,callback=None):
+        #root=Tkinter.Tk()
         self.text=Tkinter.StringVar()
         self.font=tkFont.Font(family='Times New Roman',size=40)
         #text.set('Text variable\nasdf')

@@ -8,6 +8,8 @@ from datetime import datetime
 
 import win32api, win32con
 
+import tkinter as Tkinter
+
 def hCallback(self,args):
     key=args.current_key
     print('key '+key+' was pressed.')
@@ -22,11 +24,15 @@ def hCallback(self,args):
         print('fontSize = '+str(self.fontSize))
         self.fontSize += 2
         print('fontSize = '+str(self.fontSize))
+        gif_path="valeriya-kim-edel-valentines-ver2.gif"
+        label = MyLabel(root,gif_path,callback)
     if args.current_key == 'K' and args.event_type == 'key down' and 'Lcontrol' in args.pressed_key:
         print("Ctrl + K was pressed")
         print('fontSize = '+str(self.fontSize))
         self.fontSize -= 2
         print('fontSize = '+str(self.fontSize))
+        gif_path="valeriya-kim-miku.gif"
+        label = MyLabel(root,gif_path,callback)
 
 h=hook(hCallback,mouse=False)
 
@@ -51,7 +57,9 @@ def swCallback(self):
     self.text.set(msg)
     return getState()
 
-sw=ScreenWriter(swCallback)
+root=Tkinter.Tk()
+
+sw=ScreenWriter(root,swCallback)
 
 def callback(self):
     pass
@@ -62,9 +70,7 @@ def main():
         #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
         gif_path="R.gif"
         gif_path="valeriya-kim-miku.gif"
+        gif_path="valeriya-kim-edel-valentines-ver2.gif"
+        label = MyLabel(root,gif_path,callback)
 
-        #callback=None
-
-        #label = MyLabel(root,gif_path,callback)
-
-#main()
+main()
