@@ -2,6 +2,7 @@ from screenwrite import ScreenWriter
 from pyhook import hook
 
 from spotifyinfo import spotifySong
+from animategif import MyLabel
 
 from datetime import datetime
 
@@ -51,3 +52,19 @@ def swCallback(self):
     return getState()
 
 sw=ScreenWriter(swCallback)
+
+def callback(self):
+    pass
+    #return 'q'
+
+def main():
+        #root=Tkinter.Tk()
+        #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
+        gif_path="R.gif"
+        gif_path="valeriya-kim-miku.gif"
+
+        #callback=None
+
+        #label = MyLabel(root,gif_path,callback)
+
+#main()

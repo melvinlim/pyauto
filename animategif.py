@@ -45,7 +45,10 @@ class MyLabel(Tkinter.Label):
         self.fg='gray'
         self.bg='white'
         self.master.overrideredirect(True)
-        self.master.geometry("+0+100")     #x and y locations
+        #self.master.geometry("+0+100")     #x and y locations
+        xloc=400
+        yloc=400
+        self.master.geometry("+"+str(xloc)+"+"+str(yloc))     #x and y locations
         self.master.lift()
         self.master.wm_attributes("-topmost", True)
         self.master.wm_attributes("-disabled", True)
@@ -90,6 +93,7 @@ def main():
         root=Tkinter.Tk()
         #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
         gif_path="R.gif"
+        gif_path="valeriya-kim-miku.gif"
 
         #callback=None
 
