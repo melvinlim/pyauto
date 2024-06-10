@@ -94,6 +94,7 @@ def main():
         #gif_path="C:\\Users\\winuser\\Downloads\\R.gif"
         gif_path="R.gif"
         gif_path="valeriya-kim-miku.gif"
+        gif_path="valeriya-kim-edel-valentines-ver2.gif"
 
         #callback=None
 
